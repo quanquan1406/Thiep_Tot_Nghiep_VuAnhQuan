@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thiệp Tốt Nghiệp - Vũ Anh Quân</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        navy: {
+                            800: '#1e293b', // slate-800
+                            900: '#0f172a', // slate-900
+                        },
+                        gold: {
+                            300: '#fcd34d',
+                            400: '#fbbf24', // amber-400
+                            500: '#f59e0b',
+                        }
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 1s ease-out forwards',
+                        'slow-pan': 'panImage 20s linear infinite alternate',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        panImage: {
+                            '0%': { objectPosition: 'center top' },
+                            '100%': { objectPosition: 'center bottom' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Tối ưu thanh cuộn cho mobile khi nội dung dài */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(30, 41, 59, 0.5); 
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(251, 191, 36, 0.3); 
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: rgba(251, 191, 36, 0.6); 
+        }
+
+        /* Nền họa tiết nhẹ */
+        .bg-subtle-pattern {
+            background-image: radial-gradient(rgba(251, 191, 36, 0.05) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+
+        .invitee-name {
+            display: inline-block;
+            color: #fcd34d;
+            font-size: 1.25rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            border-bottom: 1px dashed rgba(252, 211, 77, 0.6);
+            outline: none;
+            cursor: text;
+        }
+
+        /* Cho khung ảnh dùng gần trọn chiều rộng trên điện thoại. */
+        @media (max-width: 639px) {
+            body {
+                padding-left: 0.25rem !important;
+                padding-right: 0.25rem !important;
+            }
+
+            main {
+                width: calc(100vw - 0.5rem) !important;
+            }
+
+            main > section:first-child {
+                padding-left: 0.25rem !important;
+                padding-right: 0.25rem !important;
+            }
+
+            main > section:first-child > div {
+                width: 100%;
+                padding: 0.25rem !important;
+            }
+        }
+
+        /* Chiều cao ảnh co theo chiều rộng cửa sổ trên mobile và tablet. */
+        @media (max-width: 1023px) {
+            main > section:first-child {
+                height: clamp(14rem, 48vw, 22rem) !important;
+            }
+
+            main > section:first-child > div {
+                aspect-ratio: 4 / 3;
+                height: 100%;
+            }
+
+            main > section:first-child img {
+                object-fit: cover !important;
+                object-position: center center;
+                background: transparent;
+            }
+        }
+
+        @media (max-width: 1023px) and (max-height: 700px) {
+            main > section:first-child {
+                height: min(48vw, 32vh) !important;
+            }
+        }
+
+        @media (min-width: 640px) and (max-width: 1023px) and (max-height: 700px) {
+            main > section:first-child {
+                height: min(48vw, 22vh) !important;
+            }
+        }
+
+        /* Khi thu nhỏ cửa sổ, giữ nguyên khung ảnh thay vì ép thành dải ngang. */
+        @media (max-width: 1023px) {
+            body {
+                min-height: 100dvh;
+                height: auto !important;
+                overflow-y: auto !important;
+                overflow-x: hidden !important;
+                align-items: flex-start !important;
+            }
+
+            main {
+                width: calc(100vw - 4rem) !important;
+                height: auto !important;
+                max-height: none !important;
+                margin-top: 0.75rem;
+                margin-bottom: 0.75rem;
+                margin-left: auto;
+                margin-right: auto;
+                overflow: visible !important;
+            }
+
+            main > section:first-child {
+                height: auto !important;
+                padding-top: 0.5rem;
+                padding-bottom: 0.5rem;
+            }
+
+            main > section:first-child > div {
+                width: 100%;
+                height: auto;
+                aspect-ratio: 17 / 16;
+            }
+
+            main > section:first-child img {
+                display: block;
+                width: 100%;
+                height: 100%;
+                object-fit: cover !important;
+            }
+
+            main > section:last-child {
+                height: auto !important;
+                min-height: 0;
+                padding-top: 1rem;
+                padding-bottom: 1.5rem;
+                overflow: visible !important;
+            }
+        }
+
+        /* Thu gọn card khi Chrome có vùng hiển thị thấp ở zoom 100%. */
+        @media (min-width: 1024px) and (max-height: 700px) {
+            main {
+                height: calc(100dvh - 1.5rem) !important;
+            }
+
+            main > section:last-child {
+                padding: 1.25rem 2rem !important;
+            }
+
+            main > section:last-child > div {
+                max-width: 30rem;
+            }
+
+            main > section:last-child h1 {
+                font-size: 3rem;
+                margin-bottom: 0.75rem;
+            }
+
+            main > section:last-child .mb-8 {
+                margin-bottom: 1rem;
+            }
+
+            main > section:last-child .space-y-6 {
+                row-gap: 1rem;
+            }
+
+            main > section:last-child .mt-8 {
+                margin-top: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-navy-900 bg-subtle-pattern text-slate-200 h-dvh w-screen overflow-hidden flex items-center justify-center p-3 sm:p-8 font-sans relative">
+
+    <!-- Hiệu ứng ánh sáng mờ phía sau -->
+    <div class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[80vw] max-w-3xl max-h-3xl bg-gold-400/5 rounded-full blur-[100px] pointer-events-none"></div>
+
+    <!-- MAIN CARD CONTANER -->
+    <main class="w-full max-w-5xl h-[calc(100dvh-1.5rem)] sm:h-[calc(100dvh-4rem)] lg:h-[80dvh] max-h-[calc(100dvh-1.5rem)] sm:max-h-[800px] bg-navy-800/80 backdrop-blur-md rounded-2xl shadow-2xl border border-gold-400/20 flex flex-col lg:flex-row overflow-hidden relative z-10">
+        
+        <!-- Khung viền hình ảnh: Chiếm 40% màn hình trên Mobile, 50% trên Desktop -->
+        <section class="w-full lg:w-1/2 h-[32%] lg:h-full p-2 sm:p-4 lg:p-6 flex items-center justify-center relative shrink-0">
+            
+            <!-- Khung trang trí viền mỏng -->
+            <div class="w-full h-full relative p-2 border border-gold-400/30 rounded-xl">
+                <!-- Viền góc trang trí -->
+                <div class="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-gold-400"></div>
+                <div class="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-gold-400"></div>
+                <div class="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-gold-400"></div>
+                <div class="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-gold-400"></div>
+                
+                <!-- BẠN THAY ĐỔI LINK ẢNH CỦA BẠN VÀO THUỘC TÍNH SRC DƯỚI ĐÂY -->
+                <img src="anh_thiep.jfif" 
+                     alt="Ảnh Vũ Anh Quân" 
+                     class="w-full h-full object-cover rounded-lg shadow-inner brightness-90 contrast-125" />
+            </div>
+        </section>
+
+        <!-- Khu vực Nội dung: Chiếm phần còn lại, cho phép cuộn nội bộ nếu màn hình quá nhỏ -->
+        <section class="w-full lg:w-1/2 h-[68%] lg:h-full min-h-0 p-3 sm:p-5 lg:p-12 flex flex-col items-center justify-center text-center overflow-hidden">
+            
+            <div class="w-full max-w-md mx-auto flex flex-col items-center">
+                <!-- Tiêu đề nhỏ -->
+                <p class="text-gold-400 uppercase tracking-[0.2em] text-[10px] sm:text-sm font-medium mb-1 sm:mb-2">
+                    Trân trọng kính mời
+                </p>
+                <p class="mb-1 sm:mb-3">
+                    <span class="invitee-name" contenteditable="true" role="textbox" aria-label="Tên người được mời" spellcheck="false">Bạn</span>
+                </p>
+                <p class="font-serif italic text-slate-300 text-xs sm:text-base mb-1 sm:mb-4">
+                    Đến dự buổi lễ tốt nghiệp của
+                </p>
+
+                <!-- Tên -->
+                <h1 class="font-serif text-3xl sm:text-5xl lg:text-6xl text-gold-400 mb-2 sm:mb-6 drop-shadow-md">
+                    Vũ Anh Quân
+                </h1>
+
+                <!-- Dải phân cách -->
+                <div class="flex items-center justify-center w-full mb-3 sm:mb-8">
+                    <div class="h-px bg-gradient-to-r from-transparent via-gold-400/50 to-transparent flex-1"></div>
+                    <div class="mx-3 text-gold-400/70 text-sm">✦</div>
+                    <div class="h-px bg-gradient-to-r from-transparent via-gold-400/50 to-transparent flex-1"></div>
+                </div>
+
+                <div class="w-full space-y-2 sm:space-y-6 text-slate-200">
+                    
+                    <!-- Thời gian -->
+                    <div class="flex flex-col items-center justify-center p-2 sm:p-4 bg-navy-900/50 rounded-xl border border-white/5 hover:border-gold-400/30 transition-colors">
+                        <svg class="w-5 h-5 sm:w-6 sm:h-6 text-gold-400 mb-1 sm:mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                        </svg>
+                        <span class="font-serif text-base sm:text-lg text-gold-300 mb-1">Thứ Bảy, 26/09/2026</span>
+                        <span class="text-xs sm:text-sm text-slate-400">Từ 7:00 AM - 11:00 AM</span>
+                    </div>
+
+                    <!-- Địa điểm -->
+                    <div class="flex flex-col items-center justify-center p-2 sm:p-4 bg-navy-900/50 rounded-xl border border-white/5 hover:border-gold-400/30 transition-colors">
+                        <svg class="w-5 h-5 sm:w-6 sm:h-6 text-gold-400 mb-1 sm:mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                        <span class="font-serif text-base sm:text-lg text-gold-300 mb-1 text-center">Học viện Công nghệ Bưu chính Viễn thông</span>
+                        <span class="text-xs sm:text-sm text-slate-400 text-center leading-relaxed max-w-[250px]">
+                            Trần Phú, Mộ Lao,<br>Hà Đông, Hà Nội
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Lời chào kết -->
+                <p class="mt-3 sm:mt-8 text-[10px] sm:text-sm italic text-slate-400 font-serif">
+                    "Sự hiện diện của bạn là niềm vinh hạnh đối với mình."
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const inviteeName = document.querySelector('.invitee-name');
+
+        inviteeName.addEventListener('focus', () => {
+            const selection = window.getSelection();
+            const range = document.createRange();
+            range.selectNodeContents(inviteeName);
+            selection.removeAllRanges();
+            selection.addRange(range);
+        });
+
+        inviteeName.addEventListener('blur', () => {
+            if (!inviteeName.textContent.trim()) {
+                inviteeName.textContent = 'Bạn';
+            }
+        });
+    </script>
+
+</body>
+</html>
