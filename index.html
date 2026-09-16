@@ -81,6 +81,12 @@
             cursor: text;
         }
 
+        .editable-time {
+            border-bottom: 1px dashed rgba(148, 163, 184, 0.7);
+            outline: none;
+            cursor: text;
+        }
+
         /* Cho khung ảnh dùng gần trọn chiều rộng trên điện thoại. */
         @media (max-width: 639px) {
             body {
@@ -277,7 +283,9 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                         </svg>
                         <span class="font-serif text-base sm:text-lg text-gold-300 mb-1">Thứ Bảy, 26/09/2026</span>
-                        <span class="text-xs sm:text-sm text-slate-400">Từ 7:00 AM - 12:00 AM</span>
+                        <span class="text-xs sm:text-sm text-slate-400">
+                            Từ <span class="editable-time time-start" contenteditable="true" role="textbox" aria-label="Giờ bắt đầu" spellcheck="false">7:00 AM</span><span class="time-separator"> - </span><span class="editable-time time-end" contenteditable="true" role="textbox" aria-label="Giờ kết thúc" spellcheck="false">12:00 PM</span>
+                        </span>
                     </div>
 
                     <!-- Địa điểm -->
@@ -303,6 +311,8 @@
 
     <script>
         const inviteeName = document.querySelector('.invitee-name');
+        const editableTimes = document.querySelectorAll('.editable-time');
+        const timeSeparator = document.querySelector('.time-separator');
 
         inviteeName.addEventListener('focus', () => {
             const selection = window.getSelection();
@@ -317,6 +327,23 @@
                 inviteeName.textContent = 'Bạn';
             }
         });
+
+        editableTimes.forEach((time) => {
+            time.addEventListener('focus', () => {
+                const selection = window.getSelection();
+                const range = document.createRange();
+                range.selectNodeContents(time);
+                selection.removeAllRanges();
+                selection.addRange(range);
+            });
+        });
+
+        const updateTimeSeparator = () => {
+            timeSeparator.style.display = document.querySelector('.time-end').textContent.trim() ? 'inline' : 'none';
+        };
+
+        document.querySelector('.time-end').addEventListener('input', updateTimeSeparator);
+        updateTimeSeparator();
     </script>
 
 </body>
